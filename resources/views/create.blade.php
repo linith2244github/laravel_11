@@ -7,7 +7,7 @@
                     <h3>Create Product</h3>
                     <a href="/product" class="btn btn-outline-danger">back</a>
                 </div>
-                <form class="forms-sample" method="POST" enctype="multipart/form-data">
+                <form class="forms-sample" id="formCreateProduct" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" class="form-control" name="name" id="name" placeholder="Name">
@@ -34,10 +34,29 @@
                     <label for="desc">Description</label>
                     <textarea class="form-control" id="desc" name="desc" rows="2"></textarea>
                     </div>
-                    <button type="submit" class="btn btn-success mr-2">Save</button>
+                    <button onclick="storeProduct('#formCreateProduct')" type="button" class="btn btn-success mr-2">Save</button>
                     <button class="btn btn-light">Cancel</button>
                 </form>
             </div>
         </div>
     </div>
+@endsection
+
+@section('scripts')
+    <script>
+        const storeProduct = (form) => {
+            let payloads = new FormData($(form)[0]);
+            $.ajax({
+                type: "POST",
+                url: "{{ route('product.store') }}",
+                data: payloads,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    
+                }
+            });
+        }
+    </script>
 @endsection

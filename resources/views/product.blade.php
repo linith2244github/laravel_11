@@ -9,30 +9,35 @@
                 </div>
                 <div class="table-responsive">
                     <table class="table table-striped table-hover">
-                    <thead>
-                        <tr>
-                        <th>Product ID</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Qty</th>
-                        <th>Amount</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                        <td>INV-87239</td>
-                        <td>image.jpg</td>
-                        <td>Iphone 14 Pro Max</td>
-                        <td>$500</td>
-                        <td>5</td>
-                        <td>
-                            <a href="/product/edit" class="btn btn-sm btn-outline-primary me-1">Edit</a>
-                            <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
-                        </td>
-                        </tr>
-                    </tbody>
+                        <thead>
+                            <tr>
+                            <th>Product ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th>Qty</th>
+                            <th>Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($products as $product)
+                                <tr>
+                                <td>P-{{ $product->id }}</td>
+                                <td>product.jpg</td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ "$". $product->price }}</td>
+                                <td>{{ $product->qty }}</td>
+                                <td>
+                                    <a href="/product/edit" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                    <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                                </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
                     </table>
+                    <div class="mt-3">
+                        {{ $products->links() }}
+                    </div>
                 </div>
             </div>
         </div>
