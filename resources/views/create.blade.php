@@ -9,30 +9,27 @@
                 </div>
                 <form class="forms-sample" id="formCreateProduct" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                        <p></p>
                     </div>
                     <div class="form-group">
-                    <label for="price">Product Price</label>
-                    <input type="text" class="form-control" name="price" id="price" placeholder="price">
+                        <label for="price">Product Price</label>
+                        <input type="number" class="form-control" name="price" id="price" placeholder="price">
+                        <p></p>
                     </div>
                     <div class="form-group">
-                    <label for="qty">Product Qty</label>
-                    <input type="number" class="form-control" name="qty" id="qty" placeholder="quantity">
+                        <label for="qty">Product Qty</label>
+                        <input type="number" class="form-control" name="qty" id="qty" placeholder="quantity">
+                        <p></p>
                     </div>
                     <div class="form-group">
-                    <label>File upload</label>
-                    <input type="file" name="image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                        </span>
-                    </div>
+                        <label>File upload</label>
+                        <input type="file" name="image" id="image" class="form-control">
                     </div>
                     <div class="form-group">
-                    <label for="desc">Description</label>
-                    <textarea class="form-control" id="desc" name="desc" rows="2"></textarea>
+                        <label for="desc">Description</label>
+                        <textarea class="form-control" id="desc" name="desc" rows="2"></textarea>
                     </div>
                     <button onclick="storeProduct('#formCreateProduct')" type="button" class="btn btn-success mr-2">Save</button>
                     <button class="btn btn-light">Cancel</button>
@@ -54,7 +51,29 @@
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    
+                    if(response.status == 200){
+                        
+                    }else{
+                        // let errors = response.errors;
+                        if(response.errors.name != null){
+                            $("#name").addClass('is-invalid').siblings('p').addClass('text-danger').text(response.errors.name);
+                        }else{
+                            $("#name").removeClass('is-invalid').siblings('p').removeClass('text-danger').text("");
+                        }
+                        if(response.errors.price != null){
+                            $("#price").addClass("is-invalid").siblings('p').addClass("text-danger").text(response.errors.price);
+                        }else{
+                            $("#price").removeClass("is-invalid").siblings('p').removeClass("text-danger").text("");
+                        }
+                        if(response.errors.qty != null){
+                            $("#qty").addClass('is-invalid').siblings('p').addClass('text-danger').text(response.errors.qty);
+                        }else{
+                            $("#qty").removeClass('is-invalid').siblings('p').removeClass('text-danger').text("");
+                        }
+                        // if(response.errors.description != null){
+                        //     $("#desc").addClass('is-invalid').siblings('p').addClass('text-danger').text(errors.description);
+                        // }
+                    }
                 }
             });
         }

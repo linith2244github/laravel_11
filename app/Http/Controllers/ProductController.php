@@ -35,17 +35,30 @@ class ProductController extends Controller
             $product->description = $request->input('description');
             $product->price = $request->input('price');
             $product->qty = $request->input('qty');
+            if($request->file('image') != null){
+                $file = $request->file('image');
+                //extension image
+                //phone1.jpg
+                $ext = $file->getClientOriginalExtension();
+                //set image name 
+                //0-.9, 1->8
+                $imageName = rand(0, 99999999).'.'.$ext; //2343243.jpg
+                //move to directory
+                // $file->move(public_path('uploads/$imageName'));
+                $file->move(public_path('uploads'), $imageName);
+                //move image name ot table feild
+            }
             $product->save();
             return response()->json([
                 'status' => 200,
                 'message'=> 'Product created successfully'
-            ], 201);
+            ]);
         }else{
             return response()->json([
                 'status'=> 500,
                 'message'=> "Please config errors",
                 "errors" => $validator->errors()
-            ], 500);
+            ]);
         }
     }
 }
