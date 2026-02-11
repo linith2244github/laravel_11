@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -19,8 +20,22 @@ class ProductController extends Controller
         return view("create");
     }
 
-    public function edit(){
-        return view("edit");
+    public function edit(string $id){
+        $product = Product::find($id);
+        return view("edit", ["product" => $product]);
+    }
+
+    public function update(Request $request, string $id){
+        $validator = Validator::make($request->all(),[
+            "name"=> "required|min:4",
+            "price"=> "required",
+            "qty"=> "required",
+        ]);
+        if($validator->passes()){
+
+        }else{
+            return back()->withInput()->withErrors($validator);
+        }
     }
 
     public function store(Request $request){
@@ -63,5 +78,21 @@ class ProductController extends Controller
                 "errors" => $validator->errors()
             ]);
         }
+    }
+    public function delete(string $id){
+        $product = Product::find($id);
+        if($product == null){
+            return redirect()->back();
+        }
+        //delete image
+        if($product->image != null){
+            $image_path = public_path("uploads/".$product->image);
+            if(File::exists($image_path)){
+                File::delete($image_path);
+            }
+            }
+        $product->delete();
+        //redirect to view
+        return redirect()->back()->with("success","Product delete success!");
     }
 }

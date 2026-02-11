@@ -7,35 +7,44 @@
                     <h3>Update Product</h3>
                     <a href="/product" class="btn btn-outline-danger">back</a>
                 </div>
-                <form class="forms-sample" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('product.update', $product->id) }}" class="forms-sample" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" class="form-control" name="name" id="name" placeholder="Name">
+                        <label for="name">Name</label>
+                        <input type="text" class="form-control @error('name') is-invalid @enderror" name="name" id="name" placeholder="Name" value="{{ ($product->name != '') ? $product->name : 'null'  }}">
+                        @error('name')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="form-group">
-                    <label for="price">Product Price</label>
-                    <input type="text" class="form-control" name="price" id="price" placeholder="price">
+                        <label for="price">Product Price</label>
+                        <input type="text" class="form-control @error('price') is-invalid @enderror" name="price" id="price" placeholder="price" value="{{ ($product->price != '') ? $product->price : '0' }}">
+                        @error('price')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="form-group">
-                    <label for="qty">Product Qty</label>
-                    <input type="number" class="form-control" name="qty" id="qty" placeholder="quantity">
+                        <label for="qty">Product Qty</label>
+                        <input type="number" class="form-control @error('qty') is-invalid @enderror" name="qty" id="qty" placeholder="quantity" value="{{ ($product->qty != '') ? $product->qty : '0' }}">
+                        @error('qty')
+                            <p class="text-danger">{{ $message }}</p>
+                        @enderror
                     </div>
                     <div class="form-group">
-                    <label>File upload</label>
-                    <input type="file" name="image" class="file-upload-default">
-                    <div class="input-group col-xs-12">
-                        <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
-                        <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                        </span>
+                        <label for="image">Product Image</label>
+                        <input type="file" name="image" id="image" class="form-control">
                     </div>
-                    </div>
+                    @if($product->image != null)
+                        <div>
+                            <img width="100" src="{{ asset('uploads/'.$product->image) }}" alt="">
+                        </div>
+                    @endif
                     <div class="form-group">
-                    <label for="desc">Description</label>
-                    <textarea class="form-control" id="desc" name="desc" rows="2"></textarea>
+                        <label for="desc">Description</label>
+                        <textarea class="form-control" id="desc" name="desc" rows="2">{{ ($product->description != '') ? $product->description : 'null' }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-success mr-2">Update</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <a href="{{ route('product.list') }}" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>

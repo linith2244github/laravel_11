@@ -36,8 +36,8 @@
                                 <td>{{ "$". $product->price }}</td>
                                 <td>{{ $product->qty }}</td>
                                 <td>
-                                    <a href="/product/edit" class="btn btn-sm btn-outline-primary me-1">Edit</a>
-                                    <a href="#" onclick="return confirm('Do you want to delete this product?');" class="btn btn-sm btn-outline-danger">Delete</a>
+                                    <a href="{{ route('product.edit', $product->id) }}" class="btn btn-sm btn-outline-primary me-1">Edit</a>
+                                    <a href="{{ route('product.delete', $product->id) }}" onclick="return confirm('Do you want to delete this product?');" class="btn btn-sm btn-outline-danger">Delete</a>
                                 </td>
                                 </tr>
                             @endforeach

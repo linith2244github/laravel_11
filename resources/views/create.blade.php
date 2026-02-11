@@ -8,6 +8,7 @@
                     <a href="/product" class="btn btn-outline-danger">back</a>
                 </div>
                 <form class="forms-sample" id="formCreateProduct" method="POST" enctype="multipart/form-data">
+                    @csrf
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" name="name" id="name" placeholder="Name">
@@ -32,7 +33,7 @@
                         <textarea class="form-control" id="desc" name="desc" rows="2"></textarea>
                     </div>
                     <button onclick="storeProduct('#formCreateProduct')" type="button" class="btn btn-success mr-2">Save</button>
-                    <button class="btn btn-light">Cancel</button>
+                    <a href="{{ route('product.list') }}" class="btn btn-light">Cancel</a>
                 </form>
             </div>
         </div>
