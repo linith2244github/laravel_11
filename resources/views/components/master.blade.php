@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo_1/style.css') }}">
     <!-- End Layout styles -->
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   </head>
   <body>
     <div class="container-scroller">
@@ -62,6 +64,8 @@
     <!-- End custom js for this page-->
     <script src="{{ asset('assets/js/shared/jquery.cookie.js') }}" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       $.ajaxSetup({
         headers: {

@@ -32,7 +32,7 @@ class ProductController extends Controller
         if($validator->passes()){
             $product = new Product();
             $product->name = $request->input('name');
-            $product->description = $request->input('description');
+            $product->description = $request->input('desc');
             $product->price = $request->input('price');
             $product->qty = $request->input('qty');
             if($request->file('image') != null){
@@ -47,7 +47,10 @@ class ProductController extends Controller
                 // $file->move(public_path('uploads/$imageName'));
                 $file->move(public_path('uploads'), $imageName);
                 //move image name ot table feild
+                $product->image = $imageName;
             }
+            //with session
+            session()->flash('success', "Product created successfully!");
             $product->save();
             return response()->json([
                 'status' => 200,

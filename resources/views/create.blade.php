@@ -24,7 +24,7 @@
                         <p></p>
                     </div>
                     <div class="form-group">
-                        <label>File upload</label>
+                        <label for="image">File upload</label>
                         <input type="file" name="image" id="image" class="form-control">
                     </div>
                     <div class="form-group">
@@ -52,7 +52,12 @@
                 processData: false,
                 success: function (response) {
                     if(response.status == 200){
-                        
+                        //reset  form
+                        $(form).trigger('reset');
+                        // remove fields errors
+                        $("input").removeClass('is-invalid').siblings('p').removeClass('text-danger').text("");
+                        //redirect to list page
+                        window.location.href = "{{ route('product.list') }}";
                     }else{
                         // let errors = response.errors;
                         if(response.errors.name != null){
