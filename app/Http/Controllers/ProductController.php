@@ -5,13 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-// use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
-    public function index(){
-        $products = Product::orderBy('id', 'DESC')->paginate(8);
+    public function index(Request $request){
+        if($request->get("search") != ''){
+            $products = Product::orderBy("id", "DESC")->where("name", "LIKE", "%". $request->get('search') . "%")->paginate(8);
+        }else{
+            $products = Product::orderBy('id', 'DESC')->paginate(8);
+        }
         return view("product", [
             "products"=> $products
         ]);
@@ -121,5 +125,25 @@ class ProductController extends Controller
         $product->delete();
         //redirect to view
         return redirect()->back()->with("success","Product delete success!");
+    }
+    public function deleteSelect(Request $request){
+        $productIds = $request->ids;
+        //convert to array
+        $ids = explode(",", $productIds);
+        foreach($ids as $id){
+            $product = Product::find($id);
+            if($product->image != null){
+                $image_path = public_path("uploads/".$product->image);
+                if(File::exists($image_path)){
+                    File::delete($image_path);
+                }
+            }
+            $product->delete();
+        }
+        Session::flash("success","Product deleted Successfully!");
+        return response([
+            "status"=> 200,
+            "message"=> "Product deleted successfully!",
+        ]);
     }
 }
