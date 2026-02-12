@@ -32,6 +32,7 @@
                     </div>
                     <div class="form-group">
                         <label for="image">Product Image</label>
+                        <input type="hidden" value="{{ $product->image }}" name="old_image" id="old_image">
                         <input type="file" name="image" id="image" class="form-control">
                     </div>
                     @if($product->image != null)

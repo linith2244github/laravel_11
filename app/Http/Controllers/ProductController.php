@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+// use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -26,13 +27,39 @@ class ProductController extends Controller
     }
 
     public function update(Request $request, string $id){
+        $product = Product::find($id);
         $validator = Validator::make($request->all(),[
             "name"=> "required|min:4",
             "price"=> "required",
             "qty"=> "required",
         ]);
+        if($product == null){
+            return redirect()->back()->with("error", "Product not found with id $id");
+        }
         if($validator->passes()){
+            $product->name = $request->name;
+            $product->description = $request->desc;
+            $product->price = $request->price;
+            $product->qty = $request->qty;
 
+            if($request->hasFile("image")){
+                $file = $request->file("image");
+                $imageName = rand(0, 99999999) . ".". $file->getClientOriginalExtension();
+                $file->move(public_path("uploads"), $imageName);
+                if($request->old_image != null){
+                    $image_path = public_path("uploads/". $request->old_image);
+                    if(file_exists($image_path)){
+                        File::delete($image_path);
+                    }
+                }
+            }else{
+                $imageName = $request->old_image;
+            }
+            $product->image = $imageName;
+
+            $product->save();
+            // Session::flash("success", "Product updated successfull");
+            return redirect()->route("product.list")->with("success","Product updated successfull");
         }else{
             return back()->withInput()->withErrors($validator);
         }
