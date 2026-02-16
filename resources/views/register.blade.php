@@ -31,25 +31,38 @@
             <div class="col-lg-4 mx-auto">
               <h2 class="text-center mb-4">Register</h2>
               <div class="auto-form-wrapper">
-                <form action="#">
+                <form action="{{ route('auth.register.process') }}" method="POST">
+                  @csrf
                   <div class="form-group mb-3">
                     <label for="name">User name</label>
-                    <input type="text" id="name" name="name" class="form-control" placeholder="Username">
+                    <input type="text" id="name" name="name" class="form-control @error('name') is-invalid @enderror" placeholder="Username" value="{{ old('name') }}">
+                    @error('name')
+                      <p class="text-danger">{{ $message }}</p>
+                    @enderror
                   </div>
                   <div class="form-group mb-3">
                     <label for="email">User Email</label>
-                    <input type="email" id="email" name="email" class="form-control" placeholder="Username">
+                    <input type="email" id="email" name="email" class="form-control @error('email') is-invalid @enderror" placeholder="Useremail" value="{{ old('email') }}">
+                    @error('email')
+                      <p class="text-danger">{{ $message }}</p>
+                    @enderror
                   </div>
                   <div class="form-group mb-3">
                     <label for="password">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                    <input type="password" id="password" name="password" class="form-control @error('password') is-invalid @enderror" placeholder="Password" value="{{ old('password') }}">
+                    @error('password')
+                      <p class="text-danger">{{ $message }}</p>
+                    @enderror
                   </div>
                   <div class="form-group mb-3">
-                    <label for="comfirm_password">Confirm Password</label>
-                    <input type="password" name="comfirm_password" id="comfirm_password" class="form-control" placeholder="Confirm Password">
+                    <label for="confirm_password">Confirm Password</label>
+                    <input type="password" name="confirm_password" id="confirm_password" class="form-control @error('confirm_password') is-invalid @enderror" placeholder="Confirm Password" value="{{ old('confirm_password') }} ">
+                    @error('confirm_password')
+                      <p class="text-danger">{{ $message }}</p>
+                    @enderror
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary submit-btn btn-block">Register</button>
+                    <button type="submit" class="btn btn-primary submit-btn btn-block">Register</button>
                   </div>
                   <div class="text-block text-center my-3">
                     <span class="text-small font-weight-semibold">Already have and account ?</span>

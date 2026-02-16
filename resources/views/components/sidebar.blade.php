@@ -7,7 +7,7 @@
             <div class="dot-indicator bg-success"></div>
         </div>
         <div class="text-wrapper">
-            <p class="profile-name">Allen Moreno</p>
+            <p class="profile-name text-uppercase">{{ Auth::user()->name }}</p>
             <p class="designation">Premium user</p>
         </div>
         </a>

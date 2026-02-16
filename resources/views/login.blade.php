@@ -28,22 +28,30 @@
             <div class="col-lg-4 mx-auto">
               <div class="auto-form-wrapper">
                 @include('message.messages')
-                <form action="#">
+                <form action="{{ route('auth.login.process') }}" method="POST">
+                  @csrf
                   <div class="form-group">
-                    <label class="label">Username</label>
-                    <input type="text" name="name" id="name" class="form-control">
+                    <label class="label">Email</label>
+                    <input type="text" name="email" id="email" class="form-control @error('email') is-invalid @enderror" value="{{ Old('email') }}">
+                    @error('email')
+                      <p class="text-danger">{{ $message }}</p>
+                    @enderror
                   </div>
                   <div class="form-group">
                     <label class="label" for="password">Password</label>
-                    <input type="password" name="password" id="password" class="form-control">
+                    <input type="password" name="password" id="password" class="form-control @error('password') is-invalid @enderror" value="{{ old('password') }}">
+                    @error('password')
+                      <p class="text-danger">{{ $message }}</p>
+                    @enderror
                   </div>
                   <div class="form-group">
-                    <button class="btn btn-primary submit-btn btn-block">Login</button>
+                    <button type="submit" class="btn btn-primary submit-btn btn-block">Login</button>
                   </div>
                   <div class="form-group d-flex justify-content-between">
                     <div class="form-check form-check-flat mt-0">
                       <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" checked> Keep me signed in </label>
+                        {{-- <input type="checkbox" class="form-check-input" checked> Keep me signed in </label> --}}
+                        <input type="checkbox" name="remember" class="form-check-input" checked> Remember Me </label>
                     </div>
                     <a href="#" class="text-small forgot-password text-black">Forgot Password</a>
                   </div>
